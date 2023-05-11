@@ -1,27 +1,27 @@
 #include "libstat.h"
 
-void SumAggregation::PutValue(double value) {
+void statistics::aggregations::SumAggregation::PutValue(double value) {
     sum_ += value;
 }
 
-std::optional<double> SumAggregation::Get() const {
+std::optional<double> statistics::aggregations::SumAggregation::Get() const {
     return sum_;
 }
 
-void AggregateMaximum::PutValue(double value) {
+void statistics::aggregations::AggregateMaximum::PutValue(double value) {
     cur_max_ = std::max(value, cur_max_.value_or(value));
 }
 
-std::optional<double> AggregateMaximum::Get() const {
+std::optional<double> statistics::aggregations::AggregateMaximum::Get() const {
     return cur_max_;
 }
 
-void AggregatorAverage::PutValue(double value) {
+void statistics::aggregations::AggregatorAverage::PutValue(double value) {
     sum_.PutValue(value);
     ++count_;
 }
 
-std::optional<double> AggregatorAverage::Get() const {
+std::optional<double> statistics::aggregations::AggregatorAverage::Get() const {
     auto val = sum_.Get();
     if (!val || count_ == 0) {
         return std::nullopt;
@@ -30,13 +30,13 @@ std::optional<double> AggregatorAverage::Get() const {
     return *val / count_;
 }
 
-void AggregStd::PutValue(double value) {
+void statistics::aggregations::AggregStd::PutValue(double value) {
     sum_.PutValue(value);
     sum_sq_.PutValue(value * value);
     ++count_;
 }
 
-std::optional<double> AggregStd::Get() const {
+std::optional<double> statistics::aggregations::AggregStd::Get() const {
     auto val = sum_.Get();
     auto val2 = sum_sq_.Get();
 
@@ -47,7 +47,7 @@ std::optional<double> AggregStd::Get() const {
     return ::std::sqrt((*val2 - *val * *val / count_) / count_);
 }
 
-void Mode::PutValue(double value) {
+void statistics::aggregations::Mode::PutValue(double value) {
     const size_t new_count = ++counts_[round(value)];
 
     if (new_count > cur_count_) {
@@ -56,6 +56,6 @@ void Mode::PutValue(double value) {
     }
 }
 
-std::optional<double> Mode::Get() const {
+std::optional<double> statistics::aggregations::Mode::Get() const {
     return cur_max_;
 }

@@ -8,6 +8,8 @@
 #include <unordered_map>
 
 using namespace std::literals;
+namespace statistics {
+namespace aggregations {
 
 class SumAggregation {
 public:
@@ -45,7 +47,7 @@ public:
     }
 
 private:
-    ::SumAggregation sum_;
+    SumAggregation sum_;
     size_t count_ = 0;
 };
 
@@ -59,8 +61,8 @@ public:
     }
 
 private:
-    ::SumAggregation sum_;
-    ::SumAggregation sum_sq_;
+    SumAggregation sum_;
+    SumAggregation sum_sq_;
     size_t count_ = 0;
 };
 
@@ -78,6 +80,7 @@ private:
     std::optional<double> cur_max_;
     size_t cur_count_ = 0;
 };
+} // aggregations
 
 template <typename Aggreg>
 class AggregPrinter {
@@ -101,9 +104,14 @@ private:
     Aggreg inner_;
 };
 
-void TestStatAggregSum();
-void TestStatAggregMax();
-void TestStatAggregMean();
-void TestStatAggregStandardDeviation();
-void TestStatAggregMode();
-void TestStatAggregPrinter();
+namespace tests {
+
+void AggregSum();
+void AggregMax();
+void AggregMean();
+void AggregStandardDeviation();
+void AggregMode();
+void AggregPrinter();
+
+} // tests
+} // SumAggregation
