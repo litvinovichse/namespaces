@@ -11,7 +11,7 @@ using namespace std::literals;
 namespace statistics {
 namespace aggregations {
 
-class SumAggregation {
+class Sum {
 public:
     void PutValue(double value);
     std::optional<double> Get() const;
@@ -24,7 +24,7 @@ private:
     double sum_ = 0;
 };
 
-class AggregateMaximum {
+class Max {
 public:
     void PutValue(double value);
     std::optional<double> Get() const;
@@ -37,7 +37,7 @@ private:
     std::optional<double> cur_max_;
 };
 
-class AggregatorAverage {
+class Mean {
 public:
     void PutValue(double value);
     std::optional<double> Get() const;
@@ -47,11 +47,11 @@ public:
     }
 
 private:
-    SumAggregation sum_;
+    Sum sum_;
     size_t count_ = 0;
 };
 
-class AggregStd {
+class StandardDeviation {
 public:
     void PutValue(double value);
     std::optional<double> Get() const;
@@ -61,8 +61,8 @@ public:
     }
 
 private:
-    SumAggregation sum_;
-    SumAggregation sum_sq_;
+    Sum sum_;
+    Sum sum_sq_;
     size_t count_ = 0;
 };
 

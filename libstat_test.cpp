@@ -16,7 +16,7 @@ namespace statistics::tests::detail {
 }
 
 void statistics::tests::AggregSum() {
-        aggregations::SumAggregation aggreg;
+        aggregations::Sum aggreg;
     assert(*aggreg.Get() == 0);
 
     aggreg.PutValue(10.);
@@ -27,7 +27,7 @@ void statistics::tests::AggregSum() {
 }
 
 void statistics::tests::AggregMax() {
-    aggregations::AggregateMaximum aggreg;
+    aggregations::Max aggreg;
     assert(!aggreg.Get());
 
     aggreg.PutValue(10.);
@@ -38,7 +38,7 @@ void statistics::tests::AggregMax() {
 }
 
 void statistics::tests::AggregMean() {
-    aggregations::AggregatorAverage aggreg;
+    aggregations::Mean aggreg;
     assert(!aggreg.Get());
 
     aggreg.PutValue(10.);
@@ -50,7 +50,7 @@ void statistics::tests::AggregMean() {
 }
 
 void statistics::tests::AggregStandardDeviation() {
-    aggregations::AggregStd aggreg;
+    aggregations::StandardDeviation aggreg;
     assert(!aggreg.Get());
 
     aggreg.PutValue(10.);
@@ -86,7 +86,7 @@ void statistics::tests::AggregMode() {
 }
 
 void statistics::tests::AggregPrinter() {
-    statistics::AggregPrinter<statistics::aggregations::AggregateMaximum> printer;
+    statistics::AggregPrinter<statistics::aggregations::Max> printer;
 
     assert(statistics::tests::detail::GetPrinterValue(printer) == "max is undefined\n"s);
     printer.PutValue(10.);

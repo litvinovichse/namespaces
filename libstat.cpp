@@ -1,27 +1,27 @@
 #include "libstat.h"
 
-void statistics::aggregations::SumAggregation::PutValue(double value) {
+void statistics::aggregations::Sum::PutValue(double value) {
     sum_ += value;
 }
 
-std::optional<double> statistics::aggregations::SumAggregation::Get() const {
+std::optional<double> statistics::aggregations::Sum::Get() const {
     return sum_;
 }
 
-void statistics::aggregations::AggregateMaximum::PutValue(double value) {
+void statistics::aggregations::Max::PutValue(double value) {
     cur_max_ = std::max(value, cur_max_.value_or(value));
 }
 
-std::optional<double> statistics::aggregations::AggregateMaximum::Get() const {
+std::optional<double> statistics::aggregations::Max::Get() const {
     return cur_max_;
 }
 
-void statistics::aggregations::AggregatorAverage::PutValue(double value) {
+void statistics::aggregations::Mean::PutValue(double value) {
     sum_.PutValue(value);
     ++count_;
 }
 
-std::optional<double> statistics::aggregations::AggregatorAverage::Get() const {
+std::optional<double> statistics::aggregations::Mean::Get() const {
     auto val = sum_.Get();
     if (!val || count_ == 0) {
         return std::nullopt;
@@ -30,13 +30,13 @@ std::optional<double> statistics::aggregations::AggregatorAverage::Get() const {
     return *val / count_;
 }
 
-void statistics::aggregations::AggregStd::PutValue(double value) {
+void statistics::aggregations::StandardDeviation::PutValue(double value) {
     sum_.PutValue(value);
     sum_sq_.PutValue(value * value);
     ++count_;
 }
 
-std::optional<double> statistics::aggregations::AggregStd::Get() const {
+std::optional<double> statistics::aggregations::StandardDeviation::Get() const {
     auto val = sum_.Get();
     auto val2 = sum_sq_.Get();
 
